@@ -1,0 +1,7 @@
+pip-tools
+pip-sync-faster
+pylint
+pydocstyle
+pycodestyle
+-r tests.txt
+-r functests.txt

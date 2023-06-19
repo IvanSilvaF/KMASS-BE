@@ -1,0 +1,692 @@
+.text {
+  color: #3f3f3f;
+}
+
+.text--auth-prompt {
+  color: #7a7a7a;
+  margin-bottom: 50px;
+}
+
+html {
+  display: flex;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+main {
+  flex-grow: 1;
+}
+
+.svg-icon {
+  transform: translateX(0);
+}
+
+/**
+ * Mixin which enables styles if the user agent is JavaScript-capable and
+ * scripts are either loading or successfully loaded.
+ *
+ * Usage:
+ *   @include js {
+ *     // If JS is enabled, hide `thing` until the user performs some action
+ *     // which sets the 'is-expanded' state on the element.
+ *     //
+ *     // If JS is not enabled or failed to load, this selector will not apply
+ *     // and the element will not be hidden in the first place.
+ *     .thing:not(.is-expanded) { display: none };
+ *   }
+ */
+.u-hidden {
+  display: none;
+}
+
+.u-push-right {
+  margin-right: auto;
+}
+
+.u-stretch {
+  flex-grow: 1;
+}
+
+.env-js-capable:not(.env-js-timeout) .is-hidden-when-loading {
+  display: none !important;
+}
+
+/**
+ * The dark navbar shown at the top of `/admin` pages.
+ */
+.admin-navbar {
+  background-color: #202020;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  font-size: 15px;
+  justify-content: center;
+  min-height: 50px;
+}
+
+.admin-navbar__container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding-left: 15px;
+  padding-right: 15px;
+  flex-grow: 1;
+  max-width: 970px;
+}
+
+.admin-navbar__logo-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.admin-navbar__logo {
+  color: #d00032;
+}
+
+.admin-navbar__tab-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.admin-navbar__tab-item {
+  flex-shrink: 0;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  min-height: 2em;
+  --link-color: $grey-3;
+}
+.admin-navbar__tab-item.is-active, .admin-navbar__tab-item.open {
+  background-color: #7a7a7a;
+  --link-color: white;
+}
+.admin-navbar__tab-item:hover {
+  --link-color: white;
+}
+
+.admin-navbar__tab-link {
+  color: var(--link-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+}
+.admin-navbar__tab-link:hover, .admin-navbar__tab-link:focus {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+@media (min-width: 1200px) {
+  .admin-navbar__container {
+    max-width: 1170px;
+  }
+}
+.btn {
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  min-height: 30px;
+  background-color: #3f3f3f;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 15px;
+  white-space: nowrap;
+}
+.btn:hover {
+  background-color: #d00032;
+}
+
+.btn.is-hidden {
+  display: none;
+}
+
+.btn--cancel {
+  color: #3f3f3f;
+  background-color: white;
+}
+.btn--cancel:hover {
+  background-color: white;
+  color: #d00032;
+}
+
+.btn--danger {
+  background-color: #d00032;
+}
+
+@media (pointer: coarse) {
+  .btn {
+    min-height: 44px;
+  }
+}
+.env-touch .btn {
+  min-height: 44px;
+}
+
+.form__backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  background-color: white;
+  opacity: 0.5;
+}
+
+.form__submit-error {
+  color: #d00032;
+  display: none;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.form__submit-error.is-visible {
+  display: block;
+}
+
+.form.is-editing > .form__backdrop {
+  display: block;
+}
+
+.form-header {
+  margin-top: 55px;
+  margin-bottom: 30px;
+  color: #3f3f3f;
+  font-weight: normal;
+  font-size: 19px;
+}
+
+.form-header--center {
+  margin-top: 30px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.form-header__logo {
+  color: #3f3f3f;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.form-description {
+  font-size: 17px;
+  line-height: 22px;
+  margin-bottom: 30px;
+  color: #7a7a7a;
+}
+
+/**
+ * A footer which appears between form fields and the form's action buttons.
+ *
+ * Unlike "form-footer" which appears below the form, use this for things you
+ * want the user to read before they submit the form.
+ */
+.form-presubmit-footer {
+  font-size: 11px;
+  line-height: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+  color: #a6a6a6;
+}
+
+.form-footer {
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  color: #7a7a7a;
+  margin-top: 80px;
+  border-top: 1px solid #dbdbdb;
+  padding-top: 15px;
+}
+
+.form-footer--popup {
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  color: #7a7a7a;
+  position: fixed;
+  bottom: 25px;
+  left: 0;
+  right: 0;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top: 1px solid #dbdbdb;
+  padding-top: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.form-footer--no-border {
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  color: #7a7a7a;
+  margin-top: 15px;
+}
+
+.form-help-text {
+  color: #7a7a7a;
+}
+
+.form-footer__required {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-footer__symbol {
+  color: #d00032;
+  margin-right: 3px;
+}
+
+.form-actions {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  z-index: 6;
+}
+.form-actions.is-hidden {
+  display: none;
+}
+
+.form-actions.is-saving {
+  opacity: 0.5;
+}
+
+.form-checkbox {
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  color: #3f3f3f;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-checkbox--inline {
+  color: #a6a6a6;
+  border: none;
+  display: flex;
+}
+
+.form-checkbox__input {
+  margin-right: 15px;
+}
+
+.form-checkbox__label {
+  min-height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.form-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 530px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.form-container--popup {
+  max-width: 370px;
+}
+
+.form-input {
+  margin-bottom: 15px;
+  position: relative;
+  background-color: white;
+}
+
+.form-input.is-editing {
+  z-index: 6;
+}
+
+.form-input.is-hidden {
+  display: none;
+}
+
+.form-input.is-error > .form-input__label {
+  color: #d00032;
+}
+.form-input.is-error > .form-input__input {
+  color: #d00032;
+}
+.form-input.is-error > .form-input__error-list {
+  display: list-item;
+}
+
+.form-input__label {
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #7a7a7a;
+  display: flex;
+  z-index: 1;
+}
+
+.form-input__character-counter {
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: #7a7a7a;
+}
+.env-js-timeout .form-input__character-counter {
+  display: block;
+}
+.env-js-capable .form-input__character-counter {
+  display: none;
+}
+.form-input__character-counter.is-ready {
+  display: block;
+}
+.form-input__character-counter.is-too-long {
+  color: #d00032;
+  font-weight: bold;
+}
+
+.form-input__required {
+  color: #d00032;
+}
+
+.form-input__hint-icon {
+  display: none;
+  margin-left: 6px;
+  margin-top: 1px;
+  position: relative;
+}
+.env-js-capable .form-input__hint-icon {
+  display: block;
+}
+.env-js-timeout .form-input__hint-icon {
+  display: none;
+}
+
+.form-input__hint {
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  color: #7a7a7a;
+  margin-top: -10px;
+}
+.env-js-capable .form-input__hint {
+  display: none;
+}
+.env-js-timeout .form-input__hint {
+  display: block;
+}
+
+.form-input__input {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
+  background: none;
+  color: #3f3f3f;
+  font-size: 15px;
+  outline: none;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+}
+
+.form-input__input.has-label {
+  padding-top: 35px;
+  padding-bottom: 15px;
+  --bottom-padding: 15px;
+}
+
+.form-input__input:not(.has-label) {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  --bottom-padding: 5px;
+}
+
+select.form-input__input {
+  margin-top: 35px;
+}
+
+.env-js-capable .form-input__input.has-hint {
+  padding-top: 35px;
+}
+
+.form-input__input:hover {
+  border: 1px solid #a6a6a6;
+}
+
+.form-input__input:focus,
+.form-input.is-focused > .form-input__input {
+  position: relative;
+  left: -1px;
+  top: -1px;
+  padding-bottom: 13px;
+  padding-bottom: calc(var(--bottom-padding) - 2px);
+  border-width: 2px;
+  border-color: #3f3f3f;
+}
+
+.form-input.is-error > .form-input__input {
+  position: relative;
+  left: -1px;
+  top: -1px;
+  padding-bottom: 13px;
+  padding-bottom: calc(var(--bottom-padding) - 2px);
+  border-width: 2px;
+  border-color: #d00032;
+  padding-right: 210px;
+}
+
+.form-input__input:invalid {
+  box-shadow: none;
+}
+
+.form-input__error-list {
+  display: none;
+}
+
+.form-input__error-item {
+  max-width: 200px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #d00032;
+}
+
+@media (pointer: coarse) {
+  .form-input__input {
+    font-size: 16px;
+  }
+}
+.env-touch .form-input__input {
+  font-size: 16px;
+}
+
+@media screen and (max-width: 500px) {
+  .form-input.is-error > .form-input__input {
+    padding-bottom: 40px;
+    padding-right: 9px;
+  }
+  .form-input__error-item {
+    top: unset;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    max-width: unset;
+  }
+}
+.list-input {
+  /**
+   * Add padding to position list items below the absolutely-positioned field
+   * label.
+   */
+  padding-top: 30px;
+}
+
+.list-input__list {
+  padding-left: 0;
+}
+
+.list-input__item {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.list-input__item-inner {
+  display: flex;
+  flex-direction: row;
+}
+
+.list-input__remove-btn {
+  background: none;
+  border: none;
+  color: #a6a6a6;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  align-self: flex-end;
+}
+
+.list-input__remove-btn:hover {
+  color: #3f3f3f;
+}
+
+.list-input__error-list {
+  list-style-type: none;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.list-input__error-item {
+  color: #d00032;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.search-form__submit-btn {
+  margin-left: 10px;
+}
+
+.tooltip {
+  font-size: 11px;
+  line-height: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  opacity: initial;
+  border-radius: 2px;
+  background-color: #202020;
+  color: white;
+  display: none;
+  font-style: normal;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  position: absolute;
+  left: calc(100% - 12px);
+  width: 220px;
+  z-index: 20;
+}
+.env-js-capable .tooltip {
+  display: block;
+}
+.env-js-timeout .tooltip {
+  display: none;
+}
+
+.tooltip:before {
+  background: #202020;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  content: "";
+  display: none;
+  height: 6px;
+  left: 0;
+  margin-left: auto;
+  margin-right: 7px;
+  position: absolute;
+  right: 0;
+  transform: rotate(45deg);
+  width: 6px;
+  content: "";
+  top: calc(100% - 5px);
+  right: calc(100% - 16.5px);
+}
+.env-js-capable .tooltip:before {
+  display: block;
+}
+.env-js-timeout .tooltip:before {
+  display: none;
+}
+
+.tooltip-label {
+  position: relative;
+}
+
+.warning-box {
+  background-color: #fff4aa;
+  border: 1px solid orange;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.flashbar {
+  margin-top: 20px;
+}
+
+.table-auto {
+  table-layout: auto;
+  width: auto;
+}
+
+.users-activate-form {
+  display: inline;
+}
+
+.pager .pager__item--more {
+  border: none;
+}
+
+.form-input__error-list {
+  list-style-type: none;
+}
+/*# sourceMappingURL=admin.css.map */

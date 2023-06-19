@@ -1,0 +1,140 @@
+{% from 'dropdown_menu.html.jinja2' import dropdown_menu %}
+
+{% macro lozenge(facetName, facetValue) %}
+  <div class="lozenge">
+    <div class="lozenge__content">
+      <span class="lozenge__facet-name" data-ref="facetName">
+        {{ facetName }}:
+      </span>
+      <span class="lozenge__facet-value" data-ref="facetValue">
+        {{ facetValue }}
+      </span>
+    </div>
+    <button data-ref="deleteButton"
+            class="lozenge__close"
+            type="submit"
+            name="delete_lozenge"
+            title="{% trans %}Remove search term{% endtrans %}">
+      {{ svg_icon('lozenge-close') }}
+    </button>
+  </div>
+{% endmacro %}
+
+{% macro navbar(search=None, opts=None) %}
+  {% set nav = navbar_data(request) %}
+
+  {% if not opts %}
+    {% set opts = {} %}
+  {% endif %}
+
+  <header class="nav-bar">
+    <template id="lozenge-template">
+      {{ lozenge('','') }}
+    </template>
+    <div class="nav-bar__content">
+      <a href="https://web.hypothes.is/" title="CoLAM homepage" class="nav-bar__logo-container"><!--
+        !-->{{ svg_icon('logo', 'nav-bar__logo') }}</a>
+
+      <div class="nav-bar__search js-search-bar" data-ref="searchBar">
+        <form class="search-bar"
+              data-ref="searchBarForm"
+              id="search-bar"
+              action="{{ nav.search_url }}"
+              role="search">
+
+          {#- This seemingly pointless <input> is actually needed to make the
+              form work correctly. If you remove this input then when the user
+              presses Enter in the search bar input, the browser will act as if
+              the user had clicked one of the form's other submit elements
+              (e.g. the leave group button). #}
+
+          <div class="search-bar__lozenges" data-ref="searchBarLozenges">
+            {% if opts['search_username'] %}
+              {{ lozenge('user', opts['search_username']) }}
+            {% endif %}
+            {% if opts['search_groupname'] %}
+              {{ lozenge('group', opts['search_groupname']) }}
+            {% endif %}
+
+            <input class="search-bar__input js-input-autofocus"
+                   aria-autocomplete="list"
+                   aria-label="{{ _('Search annotations') }}"
+                   aria-haspopup="true"
+                   autocapitalize="off"
+                   autocomplete="off"
+                   data-ref="searchBarInput"
+                   name="q"
+                   placeholder="Search…"
+                   role="combobox"
+                   value="{{ nav.q }}">
+            <label>
+              <input type="submit" class="nav-bar__search-hidden-input">
+              {{ svg_icon('search', 'search-bar__icon') }}
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <div class="u-stretch"></div>
+
+      <nav class="nav-bar-links">
+        {% if nav.username %}
+        <span class="nav-bar-links__item">
+          <a class="nav-bar-links__link" href="{{ nav.username_url }}">
+            {{ nav.username }}
+          </a>
+        </span>
+        <span class="nav-bar-links__item">
+          <a class="nav-bar-links__link"
+            href="{{ request.route_url('activity.file_manager', username=request.user.username) }}">file management</a>
+        </span>
+        <span class="nav-bar-links__item">
+          <a class="nav-bar-links__link"
+            href="{{ request.route_url('logout') }}">Log out</a>
+        </span>
+        {% else %}
+        <a class="nav-bar-links__item nav-bar-links__link"
+           href="{{ request.route_url('login') }}">Log in</a>
+        <a class="nav-bar-links__item nav-bar-links__link"
+           href="{{ request.route_url('signup') }}">Sign up</a>
+        {% endif %}
+      </nav>
+    </div>
+    <script>
+    const elem = document.getElementById('search-bar');
+    elem.addEventListener(
+      "mousedown",
+      function (e) {
+        console.log(e)
+        username="{{ nav.username }}"
+        query_content="{{ nav.q }}"
+        var host = window.location.hostname
+
+        var request = "http://" + host + ":5000/api/" + username + "/event"
+        const data = {event: "query_submit", filename:query_content}
+        fetch(request, {
+          method : 'post',
+          headers :{ 'Content-Type' : 'application/json'},
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Success:', data);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      });
+    </script>
+  </header>
+
+  {% if search %}
+  <script type="application/json" class="js-tag-suggestions">
+    {{search.aggregations['tags'] | to_json}}
+  </script>
+  {% endif %}
+
+  <script type="application/json" class="js-group-suggestions">
+    {{nav.groups_suggestions | to_json}}
+  </script>
+{% endmacro %}

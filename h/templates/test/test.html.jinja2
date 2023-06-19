@@ -1,0 +1,107 @@
+{% extends "h:templates/layouts/base.html.jinja2" %}
+
+{% block content %}
+
+    <div class="left">
+        <p>  
+          <input placeholder="Search" type="text" id="searchText" onkeyup="searchAnnotation()"/>
+          <ul id="listComments"></ul> 
+        </p>
+    </div>
+
+    <ol>
+        {% for res in results %}
+            <li role="listitem">
+                {{res.name}}
+            </li>
+        {% endfor %}
+    </ol>
+    <div class="main">
+        <div id="divVideo">
+            <video id="ml" class="video-js vjs-custom-theme " controls autoplay="true" width="950" height="534"
+            data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=yN7ypxC7838&t=105s"}] }'>
+            </video>
+        </div>
+            <br />
+            <input type="text" id="myText" />
+            <button onclick = "addAnnotation()" > Add addAnnotation </button>
+            <br />
+    </div>
+
+<script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.js"></script>
+<script>
+    function secondsToTime(e){
+        const h = Math.floor(e / 3600).toString().padStart(2,'0'),
+            m = Math.floor(e % 3600 / 60).toString().padStart(2,'0'),
+            s = Math.floor(e % 60).toString().padStart(2,'0');        
+        return h + ':' + m + ':' + s;
+        }
+
+     function addAnnotation() {
+        var myPlayer = videojs('ml');
+        var annotation = document.getElementById("myText").value;
+        if (myPlayer.readyState() < 1) {
+            // wait for loadedmetdata event
+            myPlayer.one("loadedmetadata", onLoadedMetadata);
+        }else if(annotation!=""){
+            // metadata already loaded
+            
+            const timeAUX = myPlayer.currentTime();
+            time=secondsToTime(timeAUX);
+            var ul = document.getElementById("listComments");
+            var li = document.createElement("li");
+            //li.appendChild(document.createTextNode(time+"= "+annotation));
+            var p=document.createElement("span");
+            p.innerText=time
+            li.appendChild(p);
+            li.appendChild(document.createElement("br"));
+            var ptext=document.createElement("span");
+            ptext.innerText=annotation
+            li.appendChild(ptext);
+            li.appendChild(document.createElement("br"));
+            var pdelete=document.createElement("span");
+            pdelete.setAttribute('onclick',"deleteComment(this.parentNode.id)");
+            pdelete.innerText="Delete"
+            pdelete.style.color = "red";
+            li.appendChild(pdelete);
+            li.setAttribute("id", myPlayer.currentTime()); // added line
+            ul.appendChild(li);
+            document.getElementById("myText").value=""
+            orderComments();
+        }
+     }
+    function orderComments(){
+      var list, i, switching, b, shouldSwitch;
+      list = document.getElementById("listComments");
+      switching = true;
+      /* Make a loop that will continue until
+      no switching has been done: */
+      while (switching) {
+        // start by saying: no switching is done:
+        switching = false;
+        b = list.getElementsByTagName("LI");
+        // Loop through all list-items:
+        for (i = 0; i < (b.length - 1); i++) {
+          // start by saying there should be no switching:
+          shouldSwitch = false;
+          /* check if the next item should
+          switch place with the current item: */
+          if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+            /* if next item is alphabetically
+            lower than current item, mark as a switch
+            and break the loop: */
+            shouldSwitch = true;
+            break;
+          }
+        }
+        if (shouldSwitch) {
+          /* If a switch has been marked, make the switch
+          and mark the switch as done: */
+          b[i].parentNode.insertBefore(b[i + 1], b[i]);
+          switching = true;
+        }      
+      }}
+</script>
+
+{% endblock content %}

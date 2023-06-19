@@ -1,0 +1,14 @@
+{% extends "h:templates/accounts/base.html.jinja2" %}
+
+{% block page_title %}New password{% endblock %}
+
+{% set form_message %}
+  {% if not has_code %}
+    {% trans %}
+      Please check your email. We've sent you a reset code that you must enter
+      below in order to set your new password.
+    {% endtrans %}
+  {% endif %}
+{% endset %}
+
+{% set login_message = "Already know your password?" %}

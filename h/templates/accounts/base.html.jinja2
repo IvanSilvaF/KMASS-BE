@@ -1,0 +1,33 @@
+{% extends "h:templates/layouts/base.html.jinja2" %}
+
+{% block header %}
+  {% include "h:templates/includes/logo-header.html.jinja2" %}
+{% endblock %}
+
+{% block content %}
+  <div class="form-container content">
+    {% include "h:templates/includes/flash-messages.html.jinja2" %}
+
+    <h1 class="form-header">
+      {% block page_title %}{% endblock %}
+    </h1>
+
+    {% if form_message %}
+      <div class="form-description">{{ form_message }}</div>
+    {% endif %}
+
+    {% if form %}{{ form }}{% endif %}
+
+    <footer class="form-footer">
+      {% block form_footer %}{% endblock %}
+      {% if signup_message %}
+        {{ signup_message }}
+        <a class="link--footer" href="{{ request.route_path('signup') }}">Sign up</a>
+      {% endif %}
+      {% if login_message %}
+        {{ login_message }}
+        <a class="link--footer" href="{{ request.route_path('login') }}">Log in</a>
+      {% endif %}
+    </footer>
+  </div>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "h:templates/layouts/base.html.jinja2" %}
+
+{% block page_title %}{{ page_title }}{% endblock %}
+
+{% block header %}
+  {% include "h:templates/includes/logo-header.html.jinja2" %}
+{% endblock %}
+
+{% block content %}
+  <div class="content paper">
+    <div class="form-container">
+      {% include "h:templates/includes/flash-messages.html.jinja2" %}
+      {{ self.page_content() }}
+    </div>
+  </div>
+{% endblock content %}
